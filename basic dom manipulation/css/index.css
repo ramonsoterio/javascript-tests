@@ -65,6 +65,10 @@ td, th {
 	text-align: center;
 }
 
+th:hover {
+	background-color: #8c8c8c;
+}
+
 th{
 	font-weight: bold;
 	background-color: #EEE;
