@@ -10,8 +10,6 @@ class NegociacaoController {
 	adiciona(event) {
 		event.preventDefault();
 
-		console.log("Entrou");
-
 		let data = new Date(
 			...this._inputData.value
 				.split("-")
@@ -24,13 +22,11 @@ class NegociacaoController {
 			this._inputValor.value
 		);
 
-		//resetaFormulario();
 		console.log(negociacao);
-
 	}
 
 	resetaFormulario() {
-		let formulario = $(".form");
+		let formulario = document.querySelector(".form");
 		formulario.reset();
 		
 		this._inputData.focus();
