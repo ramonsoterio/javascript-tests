@@ -6,7 +6,6 @@ tabela.addEventListener("dblclick", function(event) {
 	if(event.target.tagName == "TH") {
 		var pacientes = converteTRsParaPacientes();
 		
-		//--Pendente
 		switch(event.target.textContent) {
 			case "Nome":
 				pacientes = pacientes.sort(dynamicSort("nome"));
