@@ -25,9 +25,11 @@ class NegociacaoController {
 		console.log(negociacao);
 	}
 
-	resetaFormulario() {
-		let formulario = document.querySelector(".form");
-		formulario.reset();
+	_limpaFormulario() {
+
+		this._inputData.value = "";
+		this._inputQuantidade.value = 0;
+		this._inputValor.value = 0;
 		
 		this._inputData.focus();
 	}
