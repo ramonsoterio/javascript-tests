@@ -10,7 +10,7 @@ class ListaNegociacoes {
     adiciona(negociacao) {
         
         this._negociacoes.push(negociacao);
-        //--função que recebe o contexto, contexto, parâmetros a serem mandados na função
+        //--função que recebe a função, contexto, parâmetros a serem mandados na função
         Reflect.apply(this._armadilha, this._contexto, [this]);
         //this._armadilha(this);
     }
