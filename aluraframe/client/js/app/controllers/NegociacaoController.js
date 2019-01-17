@@ -59,6 +59,7 @@ class NegociacaoController {
 
 		let service = new NegociacaoService();
 
+		//-- Callback Hell
 		//-- error first convention for dealing with asynchronous request
 		service.obterNegociacoesDaSemana((erro, negociacoes) => {
 			if(erro) {
@@ -67,8 +68,27 @@ class NegociacaoController {
 			}
 
 			negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-			this._mensagem.texto = "Negociações importadas com sucesso";
+			this._mensagem.texto = "1. Negociações importadas com sucesso";
 		});
 
+		service.obterNegociacoesDaSemanaAnterior((erro, negociacoes) => {
+			if(erro) {
+				this._mensagem.texto = erro;
+				return;
+			}
+
+			negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+			this._mensagem.texto = "2. Negociações da semana anterior importadas com sucesso";
+		});
+
+		service.obterNegociacoesDaSemanaRetrasada((erro, negociacoes) => {
+			if(erro) {
+				this._mensagem.texto = erro;
+				return;
+			}
+
+			negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+			this._mensagem.texto = "3. Negociações da semana retrasada importadas com sucesso";
+		});
 	}
 }
