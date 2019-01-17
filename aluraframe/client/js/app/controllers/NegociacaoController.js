@@ -78,7 +78,7 @@ class NegociacaoController {
 			}
 
 			negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-			this._mensagem.texto = "2. Negociações da semana anterior importadas com sucesso";
+			this._mensagem.texto = "2. Negociações da semana anterior importadas com sucesso";//teste
 		});
 
 		service.obterNegociacoesDaSemanaRetrasada((erro, negociacoes) => {
