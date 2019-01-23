@@ -6,11 +6,12 @@ class NegociacaoController {
 		this._inputData = $('#data');
 		this._inputQuantidade = $('#quantidade');
 		this._inputValor = $('#valor');
+		this._ordemAtual = "";
 
 		this._listaNegociacoes = new Bind(
 			new ListaNegociacoes(),
 			new NegociacoesView($("#negociacoes-view")),
-			"adiciona", "esvazia"
+			"adiciona", "esvazia", "ordena", "inverteOrdem"
 		);
 	
 		this._mensagem = new Bind(
@@ -59,16 +60,41 @@ class NegociacaoController {
 
 		let service = new NegociacaoService();
 
-		Promise.all([
-			service.obterNegociacoesDaSemana(),
-			service.obterNegociacoesDaSemanaAnterior(),
-			service.obterNegociacoesDaSemanaRetrasada()
-		])
-			.then(negociacoes => {
-				negociacoes.reduce((arrayAchatado, array) => arrayAchatado.concat(array), [])
-					.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-					this._mensagem.texto = "Negociações importadas com sucesso";
+		service.obterNegociacoes()
+		.then(negociacoes => {
+				negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+				this._mensagem.texto = "Negociações importadas com sucesso";
 			})
 			.catch(erro => this._mensagem.texto = erro);
+	}
+
+	ordena(coluna) {
+		
+		if(this._ordemAtual == coluna) {
+			this._listaNegociacoes.inverteOrdem();
+		} else {
+			this._listaNegociacoes.ordena((a, b) => a[coluna] - b[coluna]);
+		}
+		
+		this._ordemAtual = coluna;
+	}
+
+	gravar(event) {
+
+		event.preventDefault();
+		
+		console.log("Enviando post");
+
+		let negociacao = {
+			data: this._inputData.value,
+			quantidade: this._inputQuantidade.value,
+			valor: this._inputValor.value
+		};
+
+		console.log(negociacao);
+
+		new NegociacaoService().gravarNegociacao(negociacao)
+			.then(() => this._mensagem.texto = "Negociação gravada com sucesso")
+			.catch(() => this._mensagem.texto = "Erro ao gravar a negociação")
 	}
 }
